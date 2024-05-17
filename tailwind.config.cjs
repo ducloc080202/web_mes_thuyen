@@ -13,17 +13,13 @@ module.exports = {
         colors: {
             transparent: "transparent",
             primary: {
-                // 1: "#263F59",
-
-                1: "#0F2C59",
-                // 1: "#025464",
+                1: "#263F59",
                 2: "#4D7EB3",
                 3: "#A6BED9",
                 4: "#e6f0ff",
             },
             accent: {
-                // 1: "#FC8403",
-                1: "#B68A00",
+                1: "#FC8403",
                 2: "#FECE9A",
             },
             neutron: {
@@ -31,7 +27,6 @@ module.exports = {
                 2: "#656A81",
                 3: "#F6F6F6",
                 4: "#FFFFFF",
-                5: "#e6e6e6",
             },
             maintenanceStatus: {
                 0: "#888888",

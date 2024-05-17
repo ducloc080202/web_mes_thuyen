@@ -883,12 +883,12 @@ export const getCreateOperationEditMenuNav = (previousOperation) => [
                 label: "Tên",
                 isError: validateDescField,
             },
-            {
-                id: "duration",
-                type: "text",
-                label: "Khoảng thời gian ",
-                isError: validateDescField,
-            },
+            // {
+            //     id: "duration",
+            //     type: "text",
+            //     label: "Khoảng thời gian ",
+            //     isError: validateDescField,
+            // },
             {
                 id: "prerequisiteOperation",
                 type: "selectMutils",

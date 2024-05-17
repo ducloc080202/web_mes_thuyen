@@ -17,22 +17,22 @@ function App() {
 
                 return (
                     <Fragment key={route.path}>
-                        {protectedRoute && !isLogin ? (
+                        {/* {protectedRoute && !isLogin ? (
                             <Route path="*" element={<Navigate to={paths.login} />} />
-                        ) : (
-                            <Route
-                                path={route.path}
-                                element={
-                                    ComponentLayout ? (
-                                        <ComponentLayout title={route.title}>
-                                            <Component />
-                                        </ComponentLayout>
-                                    ) : (
+                        ) : ( */}
+                        <Route
+                            path={route.path}
+                            element={
+                                ComponentLayout ? (
+                                    <ComponentLayout title={route.title}>
                                         <Component />
-                                    )
-                                }
-                            />
-                        )}
+                                    </ComponentLayout>
+                                ) : (
+                                    <Component />
+                                )
+                            }
+                        />
+                        {/* )} */}
                     </Fragment>
                 )
             })}

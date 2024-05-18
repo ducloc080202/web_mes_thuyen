@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 
 import { schedulingActions } from "@/store"
 import { paths, mutilSeriesRangeBarChartConfig } from "@/config"
-import { orderApi, hierarchyApi, InjectionMachineApi } from "@/services/api"
+import { orderApi, hierarchyApi, InjectionMachineApi, workOrderApi } from "@/services/api"
 import { useCallApi } from "@/hooks"
 import {
     getEquipmentListOfMaterial,
@@ -115,20 +115,35 @@ function ProductSScheduling() {
         )
     }
     const handleAutoScheduling = async () => {
+        console.log(schedulingProducts)
         let payload = schedulingProducts.map((item) => ({
             ...item,
             manufacturingOrderId: item.manufacturingOrder,
+            workOrderId: item.workOrderId,
         }))
 
         let data = {
-            orderIds: payload,
-            schedulingStrategy: {
-                priortizingStrategy: 0,
+            workOrderIds: payload,
+            schedulingOptions: {
+                overridingOptions: {
+                    overridingStrategy: 0,
+                },
+                optimizationOptions: {
+                    optimizationStrategy: 0,
+                    groupingAllowed: true,
+                    tabuSearchOptions: {
+                        maxIterations: 20,
+                        tabuListSize: 10,
+                    },
+                },
+                planningOptions: {
+                    splittingAllowed: true,
+                },
             },
         }
 
         try {
-            const response = await InjectionMachineApi.autoScheduling.createAutoScheduling(data)
+            const response = await workOrderApi.autoScheduling.autoScheduling(data)
             // Handle the response data here
 
             let dispatchData = response.map((item) => ({
@@ -168,12 +183,12 @@ function ProductSScheduling() {
                 {/* <Button onClick={() => setShowChart(!showChart)} transparent={!showChart}>
                     <BsBarChartSteps />
                 </Button> */}
-                <div className="ml-auto">
+                <Button onClick={handleAutoScheduling} className="ml-auto">
+                    Tự động điều độ
+                </Button>
+                <div className="ml-5">
                     <ProductSchedulingDisplayToggle filter={statusFilter} setFilter={setStatusFilter} />
                 </div>
-                {/* <Button onClick={handleAutoScheduling} className="ml-auto">
-                    Tự động điều độ
-                </Button> */}
             </div>
             {statusFilter != 0 && (
                 <Card className="scroll-y mb-5 max-h-[50%] w-full">

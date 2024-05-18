@@ -7,6 +7,10 @@ const workOrderApi = {
     startWorkOrder: async (id) => axiosClient.patch(`/workOrders/${id}/start`, new Date().toISOString()),
     closeWorkOrder: async (id) => axiosClient.patch(`/workOrders/${id}/close`, new Date().toISOString()),
     deleteWorkOrder: async (id) => axiosClient.delete(`/workOrders/${id}`),
+    autoScheduling: {
+        createAutoScheduling: async (data) => await axiosClient.post("/ManufacturingOrders/workorders/schedule", data),
+        autoScheduling: async (data) => await axiosClient.post("/Scheduling/schedulesinglesegmentworkorders", data),
+    },
 }
 
 export default workOrderApi

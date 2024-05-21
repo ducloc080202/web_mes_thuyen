@@ -39,7 +39,7 @@ const handler = {
     },
     createMenuNav: {
         0: () => getCreateWorkUnitMenuNav(),
-        1: (list) => getCreateOperationMenuNav(list),
+        1: (previousOperation, equipmentClassId) => getCreateOperationMenuNav(previousOperation, equipmentClassId),
     },
     editMenuNav: {
         0: () => getCreateWorkUnitEditMenuNav(),
@@ -70,27 +70,36 @@ function MaterialDetailPage() {
     const [operations, setOperations] = useState([])
     const [equipmentClassList, setEquipmentClassList] = useState([])
     const [previousOperationList, setPreviousOperationList] = useState([]) // dùng trong bảng thêm công đoạn
+    const [equipmentClassIdList, setEquipmentClassIdList] = useState([]) // dùng trong bảng thêm công đoạn
 
     const [initValue, setInitValue] = useState() // dùng để chứa data đang chỉnh sửa, nếu = null thì đang tạo mục mới; undefined là bình thường
     const [activedItem, setActivedItem] = useState(null)
     const [toggleButtonsMode, setToggleButtonsMode] = useState(0)
-
     const fetchData = useCallback(() => {
-        callApi([resourceApi.material.getPreviousOperation(routeData.materialDefinitionId)], (res) => {
-            setPreviousOperationList(
-                poperListMapper(
-                    res[0].items.map((item) => item.operations[0]),
-                    "operationId",
-                    "name",
-                ),
-            )
-            setSecondaryUnits(res[0].items[0].secondaryUnits)
-            setOperations(res[0].items[0].operations)
-        })
+        callApi(
+            [
+                resourceApi.material.getPreviousOperation(routeData.materialDefinitionId),
+                resourceApi.equipment.getEquipmentClasses(),
+            ],
+            (res) => {
+                console.log(res)
+                setPreviousOperationList(
+                    poperListMapper(
+                        res[0].items.map((item) => item.operations[0]),
+                        "operationId",
+                        "name",
+                    ),
+                )
+                setSecondaryUnits(res[0].items[0].secondaryUnits)
+                setOperations(res[0].items[0].operations)
+                setEquipmentClassIdList(poperListMapper(res[1].items, "equipmentClassId", "name"))
+            },
+        )
     }, [callApi])
     useEffect(() => {
         fetchData()
     }, [fetchData])
+    console.log(equipmentClassIdList)
 
     const handleAdd = (e) => {
         setInitValue(null)
@@ -196,7 +205,7 @@ function MaterialDetailPage() {
                     menuNavigaton={
                         initValue
                             ? handler.editMenuNav[toggleButtonsMode](previousOperationList)
-                            : handler.createMenuNav[toggleButtonsMode](previousOperationList)
+                            : handler.createMenuNav[toggleButtonsMode](previousOperationList, equipmentClassIdList)
                     }
                     onClick={handleSubmit}
                     initValue={initValue ? initValue : undefined}

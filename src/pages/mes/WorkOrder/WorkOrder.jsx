@@ -11,11 +11,11 @@ import Confirm from "@/components/Confirm"
 
 import { usePoperMenu, useCallApi, usePoperMenuNew } from "@/hooks"
 import { schedulingActions } from "@/store"
-import { orderApi, hierarchyApi } from "@/services/api"
+import { orderApi, hierarchyApi, resourceApi } from "@/services/api"
 import { PRODUCTION_COMMAND_TABLE_COLUMNS } from "@/utils/tableColumns"
 import { getProductionCommandMenuNav } from "@/utils/menuNavigation"
 import { paths } from "@/config"
-import { getPrerequisteOperationList, MESWorkOrderMapper } from "@/utils/functions"
+import { getPrerequisteOperationList, MESWorkOrderMapper, poperListMapper } from "@/utils/functions"
 import PoperMenuNew from "@/components/PoperMenuNew"
 
 function WorkOrder() {
@@ -31,14 +31,20 @@ function WorkOrder() {
     const [initValue, setInitValue] = useState()
     const [schedulingOrders, setSchedulingOrders] = useState([])
     const [fourSelectData, setFourSelectData] = useState([]) // dùng để tạo select cho work center
+    const [equipmentClassIdList, setEquipmentClassIdList] = useState([]) // dùng trong bảng thêm công đoạn
+
     const [deleteConfirm, setDeleteConfirm] = useState({})
     const [prerequisiteOperations, setPrerequistteOperations] = useState([])
     const [activedItem, setActivedItem] = useState(null)
 
     const fetchWorkOrders = useCallback(() => {
         callApi(
-            [orderApi.workOrder.getWorkOrders(manufacturingOrderId), hierarchyApi.enterprise.getEnterprise()],
-            ([workOrder, fourSelectData]) => {
+            [
+                orderApi.workOrder.getWorkOrders(manufacturingOrderId),
+                hierarchyApi.enterprise.getEnterprise(),
+                resourceApi.equipment.getEquipmentClasses(),
+            ],
+            ([workOrder, fourSelectData, equipmentClass]) => {
                 console.log(workOrder)
                 setWorkOrders(
                     workOrder.items.map((item) => {
@@ -51,6 +57,7 @@ function WorkOrder() {
                 )
                 setPrerequistteOperations(getPrerequisteOperationList(workOrder.items, "workOrderId", "workOrderId"))
                 setFourSelectData(fourSelectData.items)
+                setEquipmentClassIdList(poperListMapper(equipmentClass.items, "equipmentClassId", "name"))
             },
         )
     }, [callApi])
@@ -72,6 +79,7 @@ function WorkOrder() {
                 prerequisiteOperations: value.info.prerequisiteOperations ? value.info.prerequisiteOperations : [],
                 workOrderStatus: 0,
                 workCenter: value.fourSelect.workCenter[0],
+                equipmentRequirements: value.equipmentRequirements.map((item) => item.equipmentRequirementsItem),
                 // ...value.fourSelect,
             }
             callApi(
@@ -202,7 +210,11 @@ function WorkOrder() {
 
             {active && (
                 <PoperMenuNew
-                    menuNavigaton={getProductionCommandMenuNav(prerequisiteOperations, fourSelectData)}
+                    menuNavigaton={getProductionCommandMenuNav(
+                        prerequisiteOperations,
+                        fourSelectData,
+                        equipmentClassIdList,
+                    )}
                     position={position}
                     onClose={() => {
                         setInitValue(undefined)

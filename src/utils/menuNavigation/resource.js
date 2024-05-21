@@ -9,12 +9,14 @@ import {
     INJECTION_MACHINE_TABLE_COLUMNS,
     NORMAL_MACHINE_TABLE_COLUMNS,
     MATERIAL_PROP_TABLE_COLUMNS,
+    OPERATION_TABLE_COLUMNS,
 } from "@/utils/tableColumns"
 import {
     CREATE_PROPERTY_SUB_NAV,
     EDIT_PROPERTY_SUB_NAV,
     CREATE_INJECTION_MACHINE_PROPERTIES_SUB_NAV,
     CREATE_NORMAL_MACHINE_PROPERTIES_SUB_NAV,
+    CREATE_OPERATION_SUB_NAV,
 } from "./common"
 
 //worker
@@ -832,10 +834,56 @@ export const getCreateWorkUnitEditMenuNav = () => [
         ],
     },
 ]
-export const getCreateOperationMenuNav = (previousOperation) => [
+// export const getCreateOperationMenuNav = (previousOperation) => [
+//     {
+//         id: "info",
+//         title: "Công đoạn",
+//         type: "form",
+//         items: [
+//             {
+//                 id: "operationId",
+//                 type: "text",
+//                 label: "Id",
+//                 isError: validateIdField,
+//             },
+//             {
+//                 id: "name",
+//                 type: "text",
+//                 label: "Tên",
+//                 isError: validateDescField,
+//             },
+//             {
+//                 id: "quantity",
+//                 type: "text",
+//                 label: "Số lượng",
+//                 isError: validateNumberField,
+//             },
+//             // {
+//             //     id: "duration",
+//             //     type: "text",
+//             //     label: "Khoảng thời gian ",
+//             //     isError: validateDescField,
+//             // },
+//             {
+//                 id: "prerequisiteOperation",
+//                 type: "selectMutils",
+//                 label: "Công đoạn trước",
+//                 list: previousOperation ?? [],
+//             },
+//         ],
+//     },
+//     {
+//         id: "properties",
+//         title: "Thuộc tính loại nhân viên",
+//         type: "table",
+//         headers: OPERATION_TABLE_COLUMNS,
+//         subNav: CREATE_OPERATION_SUB_NAV,
+//     },
+// ]
+export const getCreateOperationMenuNav = (previousOperation, equipmentClassId) => [
     {
         id: "info",
-        title: "Công đoạn",
+        title: "Thêm công đoạn",
         type: "form",
         items: [
             {
@@ -851,10 +899,10 @@ export const getCreateOperationMenuNav = (previousOperation) => [
                 isError: validateDescField,
             },
             {
-                id: "duration",
+                id: "quantity",
                 type: "text",
-                label: "Khoảng thời gian ",
-                isError: validateDescField,
+                label: "Số lượng",
+                isError: validateNumberField,
             },
             {
                 id: "prerequisiteOperation",
@@ -863,6 +911,21 @@ export const getCreateOperationMenuNav = (previousOperation) => [
                 list: previousOperation ?? [],
             },
         ],
+    },
+    {
+        id: "equipmentRequirements",
+        title: "Yêu cầu thiết bị",
+        type: "table",
+        items: [
+            // {
+            //     id: "equipmentId",
+            //     type: "text",
+            //     label: "ID thiết bị",
+            //     isError: validateIdField,
+            // },
+        ],
+        headers: OPERATION_TABLE_COLUMNS,
+        subNav: CREATE_OPERATION_SUB_NAV(equipmentClassId),
     },
 ]
 export const getCreateOperationEditMenuNav = (previousOperation) => [

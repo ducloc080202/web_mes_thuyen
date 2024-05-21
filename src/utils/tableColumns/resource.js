@@ -839,15 +839,10 @@ export const MES_MATERIALDETAILPAGE_OPERATION_TABLE_COLUMNS = [
         disableSortBy: false,
     },
     // {
-    //     Header: "Thời gian",
+    //     Header: "Khoảng thời gian",
     //     accessor: "duration",
     //     disableSortBy: false,
     // },
-    {
-        Header: "Khoảng thời gian",
-        accessor: "duration",
-        disableSortBy: false,
-    },
     {
         Header: "Công đoạn trước",
         accessor: "prerequisiteOperation",

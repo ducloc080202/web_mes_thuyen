@@ -20,6 +20,16 @@ export const PROPERTIES_TABLE_COLUMNS = [
     //     accessor: "valueUnitOfMeasure",
     // },
 ]
+export const OPERATION_TABLE_COLUMNS = [
+    {
+        Header: "Id loại thiết bị",
+        accessor: "equipmentClassIds",
+    },
+    {
+        Header: "Số lượng",
+        accessor: "quantity",
+    },
+]
 export const INJECTION_MACHINE_TABLE_COLUMNS = [
     {
         Header: "Mô tả",

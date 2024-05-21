@@ -5,8 +5,10 @@ import {
     validateIdField,
     validateDescField,
 } from "@/utils/functions"
+import { OPERATION_TABLE_COLUMNS } from "../tableColumns"
+import { CREATE_OPERATION_SUB_NAV } from "./common"
 
-export const getProductionCommandMenuNav = (prerequisiteOperations, fourSelectData) => [
+export const getProductionCommandMenuNav = (prerequisiteOperations, fourSelectData, equipmentClassId) => [
     {
         id: "info",
         title: "Đơn công đoạn mới",
@@ -64,6 +66,21 @@ export const getProductionCommandMenuNav = (prerequisiteOperations, fourSelectDa
                 list: fourSelectData ?? [],
             },
         ],
+    },
+    {
+        id: "equipmentRequirements",
+        title: "Yêu cầu thiết bị",
+        type: "table",
+        items: [
+            // {
+            //     id: "equipmentId",
+            //     type: "text",
+            //     label: "ID thiết bị",
+            //     isError: validateIdField,
+            // },
+        ],
+        headers: OPERATION_TABLE_COLUMNS,
+        subNav: CREATE_OPERATION_SUB_NAV(equipmentClassId),
     },
 ]
 export const getCreateManufacturingOrderMenuNav = (materialDefinitionList) => [

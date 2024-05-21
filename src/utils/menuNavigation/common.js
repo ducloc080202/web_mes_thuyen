@@ -110,7 +110,27 @@ export const CREATE_PROPERTY_SUB_NAV = [
     //     ],
     // },
 ]
-
+export const CREATE_OPERATION_SUB_NAV = (previousOperation) => [
+    {
+        id: "equipmentRequirementsItem",
+        title: "Thêm yêu cầu thiết bị",
+        type: "form",
+        items: [
+            {
+                id: "equipmentClassIds",
+                type: "selectMutils",
+                label: "Loại thiết bị",
+                list: previousOperation ?? [],
+            },
+            {
+                id: "quantity",
+                type: "text",
+                label: "Số lượng",
+                isError: validateIdField,
+            },
+        ],
+    },
+]
 export const EDIT_PROPERTY_SUB_NAV = [
     {
         id: "property",

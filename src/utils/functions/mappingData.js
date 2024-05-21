@@ -980,6 +980,7 @@ export const MESOperationMapper = {
         let res = {
             prerequisiteOperation: [],
             ...data.info,
+            equipmentRequirements: data.equipmentRequirements.map((item) => item.equipmentRequirementsItem),
         }
         return res
     },

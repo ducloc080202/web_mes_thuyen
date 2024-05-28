@@ -24,6 +24,7 @@ import {
     getResourceOptionsList,
     injectionMachineManufacturingOrderMapper,
     manufacturingOrderMapper,
+    poperListMapper,
 } from "@/utils/functions"
 import { MANUFACTURING_ORDER_MODE_LIST, MANUFACTORING_ORDER_LIST } from "@/utils/constants"
 import { setPageTitle } from "@/store/slices/common"
@@ -52,22 +53,21 @@ function ManufacturingOrder() {
         callApi(
             [
                 orderApi.manufacturingOrder.getManufacturingOrders(),
-                InjectionMachineApi.plasticProduct.getPlasticProduct(),
-                InjectionMachineApi.manufacturingOrder.getManufacturingOrder(),
-                InjectionMachineApi.injectionMachine.getInjectionMachine(),
+                // InjectionMachineApi.plasticProduct.getPlasticProduct(),
+                // InjectionMachineApi.manufacturingOrder.getManufacturingOrder(),
+                // InjectionMachineApi.injectionMachine.getInjectionMachine(),
                 resourceApi.material.getMaterials(),
             ],
             (res) => {
-                console.log(res)
+                console.log(poperListMapper(res[1].items, "materialDefinitionId", "name"))
+                setMaterialDefinitionList(poperListMapper(res[1].items, "materialDefinitionId", "name"))
                 setManufacturingOrder(res[0].items)
-                setPlasticProductList(getResourceOptionsList(res[1].items, "plasticProductId"))
-                setInjectionManufacturingOrder(res[2].items)
-                setInjectionEquipmentList(getResourceOptionsList(res[3].items, "equipmentId"))
-                setMaterialDefinitionList(getResourceOptionsList(res[4].items, "materialDefinitionId"))
+                // setPlasticProductList(getResourceOptionsList(res[1].items, "plasticProductId"))
+                // setInjectionManufacturingOrder(res[2].items)
+                // setInjectionEquipmentList(getResourceOptionsList(res[3].items, "equipmentId"))
             },
         )
     }, [callApi])
-    console.log(initValue)
     useEffect(() => {
         fetchData()
     }, [fetchData])

@@ -111,19 +111,18 @@ function ResourceEquipment() {
         callApi(
             [
                 handler.fetchData.equipment(),
-                handler.fetchData.injectionMachine(),
-                handler.fetchData.mold(),
+                // handler.fetchData.injectionMachine(),
+                // handler.fetchData.mold(),
 
                 resourceApi.equipment.getEquipmentClasses(),
                 hierarchyApi.enterprise.getEnterprise(),
             ],
             (res) => {
+                setClasses(getResourceOptionsList(res[1].items, "equipmentClassId"))
+                setFiveSelectData(res[2].items)
                 setNormalMachine(res[0].items)
-                setInjectionMachine(res[1].items)
-                setMold(res[2].items)
-
-                setClasses(getResourceOptionsList(res[3].items, "equipmentClassId"))
-                setFiveSelectData(res[4].items)
+                // setInjectionMachine(res[1].items)
+                // setMold(res[2].items)
             },
         )
     }, [callApi])

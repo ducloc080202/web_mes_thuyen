@@ -163,6 +163,7 @@ function CheckTable({
                                                         </p>
 
                                                         {onDeleteRow &&
+                                                            row?.workOrderStatus == 2 &&
                                                             i === headers.length - 1 &&
                                                             activeIndex === index && (
                                                                 <i

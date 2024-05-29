@@ -113,25 +113,25 @@ function Dashboard() {
             [
                 resourceApi.equipment.getEquipmentClasses(),
                 resourceApi.equipment.getEquipments(),
-                InjectionMachineApi.injectionMachine.getInjectionMachine(),
-                InjectionMachineApi.mold.getMold(),
+                // InjectionMachineApi.injectionMachine.getInjectionMachine(),
+                // InjectionMachineApi.mold.getMold(),
 
                 resourceApi.material.getMaterialClasses(),
                 resourceApi.material.getMaterials(),
-                InjectionMachineApi.plasticProduct.getPlasticProduct(),
-                InjectionMachineApi.plasticMaterial.getPlasticMaterial(),
+                // InjectionMachineApi.plasticProduct.getPlasticProduct(),
+                // InjectionMachineApi.plasticMaterial.getPlasticMaterial(),
             ],
             (res) => {
                 setResourceCount({
                     equipmentClass: res[0].totalItems,
                     equipment: res[1].totalItems,
-                    injectionMachine: res[2].totalItems,
-                    mold: res[3].totalItems,
+                    // injectionMachine: res[2].totalItems,
+                    // mold: res[3].totalItems,
 
-                    materialClass: res[4].totalItems,
-                    material: res[5].totalItems,
-                    plasticProduct: res[6].totalItems,
-                    plasticMaterial: res[7].totalItems,
+                    materialClass: res[2].totalItems,
+                    material: res[3].totalItems,
+                    // plasticProduct: res[6].totalItems,
+                    // plasticMaterial: res[7].totalItems,
                 })
             },
         )

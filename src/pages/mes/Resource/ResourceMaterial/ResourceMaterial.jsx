@@ -113,23 +113,23 @@ function ResourceMaterial() {
         callApi(
             [
                 handler.fetchData.material(),
-                handler.fetchData.plasticProduct(),
-                handler.fetchData.plasticMaterial(),
+                // handler.fetchData.plasticProduct(),
+                // handler.fetchData.plasticMaterial(),
 
-                handler.fetchData.mold(),
+                // handler.fetchData.mold(),
                 handler.fetchData.materialClass(),
             ],
             (res) => {
                 setMaterial(res[0].items)
-                setPlasticProduct(res[1].items)
-                setPlasticMaterial(res[2].items)
+                // setPlasticProduct(res[1].items)
+                // setPlasticMaterial(res[2].items)
 
-                setMoldProperList(getResourceOptionsList(res[3].items, "moldId"))
-                setMaterialClassList(getResourceOptionsList(res[4].items, "materialClassId"))
+                // setMoldProperList(getResourceOptionsList(res[3].items, "moldId"))
+                setMaterialClassList(getResourceOptionsList(res[1].items, "materialClassId"))
             },
         )
     }, [callApi])
- 
+
     useEffect(() => {
         fetchData()
     }, [fetchData])

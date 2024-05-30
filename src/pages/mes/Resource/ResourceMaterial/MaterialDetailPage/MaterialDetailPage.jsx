@@ -82,14 +82,7 @@ function MaterialDetailPage() {
                 resourceApi.equipment.getEquipmentClasses(),
             ],
             (res) => {
-                console.log(res)
-                setPreviousOperationList(
-                    poperListMapper(
-                        res[0].items.map((item) => item.operations[0]),
-                        "operationId",
-                        "name",
-                    ),
-                )
+                setPreviousOperationList(poperListMapper(res[0].items[0].operations, "operationId", "name"))
                 setSecondaryUnits(res[0].items[0].secondaryUnits)
                 setOperations(res[0].items[0].operations)
                 setEquipmentClassIdList(poperListMapper(res[1].items, "equipmentClassId", "name"))

@@ -282,10 +282,11 @@ function SchedulingItem({ item, index, schedulingProducts, handleSetValue, workC
                         onChange={(e) => {
                             let tempStartTime = e.target.value
                             let tempEndTime = addTimeToDateTime(tempStartTime, item.duration)
+                            handleSetValue(index, { endTime: tempEndTime, startTime: tempStartTime })
                             if (compareTime(tempEndTime, item.dueDate) != 1) {
-                                handleSetValue(index, { endTime: tempEndTime, startTime: tempStartTime })
+                                console.log(" ")
                             } else {
-                                toast.error("Ngày kết thúc phải trước ngày đến hạn")
+                                toast.error("Ngày kết thúc trước ngày đến hạn sẽ khiến điều độ bị trễ hạn!")
                             }
                         }}
                     />
@@ -298,13 +299,16 @@ function SchedulingItem({ item, index, schedulingProducts, handleSetValue, workC
                         onChange={(e) => {
                             let tempEndTime = e.target.value
                             let tempStartTime = subTimeToDateTime(tempEndTime, item.duration)
+                            handleSetValue(index, { endTime: tempEndTime, startTime: tempStartTime })
                             if (
                                 compareTime(tempEndTime, formatDateTime(schedulingProducts[index].startTime)) != -1 &&
                                 compareTime(tempEndTime, item.dueDate) != 1
                             ) {
-                                handleSetValue(index, { endTime: tempEndTime, startTime: tempStartTime })
+                                console.log(" ")
                             } else {
-                                toast.error("Ngày kết thúc phải sau ngày bắt đầu và trước ngày đến hạn")
+                                toast.warning(
+                                    "Ngày kết thúc sau ngày bắt đầu và trước ngày đến hạn sẽ khiến điều độ bị trễ hạn!",
+                                )
                             }
                         }}
                     />
